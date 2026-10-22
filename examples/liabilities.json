@@ -1,0 +1,11 @@
+{
+  "note": "Fictional instruments for the regtest demo. Shaped like a bitcoin-treasury company's capital stack (convertible notes, preferred stock, a term loan); not Strategy's actual liabilities.",
+  "entity": "Demo Treasury Co (test data)",
+  "liabilities": [
+    { "id": "CVT-2030", "kind": "convertible_note", "label": "0% convertible senior notes due 2030 (principal)", "notional_usd_cents": 80000000 },
+    { "id": "CVT-2032", "kind": "convertible_note", "label": "0.5% convertible senior notes due 2032 (principal)", "notional_usd_cents": 45000000 },
+    { "id": "PREF-A", "kind": "preferred_stock", "label": "Series A perpetual preferred (liquidation preference)", "notional_usd_cents": 40000000 },
+    { "id": "PREF-B", "kind": "preferred_stock", "label": "Series B perpetual preferred (liquidation preference)", "notional_usd_cents": 15000000 },
+    { "id": "LOAN-1", "kind": "term_loan", "label": "Secured term loan (outstanding principal)", "notional_usd_cents": 20000000 }
+  ]
+}

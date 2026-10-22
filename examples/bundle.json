@@ -1,0 +1,209 @@
+{
+  "format": "tpor-bundle/v1",
+  "entity": "Demo Treasury Co (test data)",
+  "network": "regtest",
+  "snapshot": {
+    "height": 113,
+    "block_hash": "18804cd0c1ed19fbe6b371efcba8a53b8efaa6359899e0f9127ebcb983772509"
+  },
+  "challenge": "treasury-proof-of-reserves/v1\nentity: Demo Treasury Co (test data)\nnetwork: regtest\nheight: 113\nblock_hash: 18804cd0c1ed19fbe6b371efcba8a53b8efaa6359899e0f9127ebcb983772509\nliabilities_root: d5261c18672bd568780e862e14d6c930af5edc1315af557ab649cb690362a98f\nnonce: c0f6baf7118232fe9342ad1cbb668302",
+  "assets": {
+    "proofs": [
+      {
+        "address": "bcrt1qkrs299m95ltwcwtwfj48qx5gms2z68s9ay25hr",
+        "script_type": "p2wpkh",
+        "format": "bip322-simple (smp)",
+        "signature": "smpAkgwRQIhAMC89lIAduGuBYKNUZC6gCbINGnD1iHAdenit/VbV5wdAiAoMCzDPOciLXEJYfkK0UkonkG2/cyv/HgoqTAoTKg5XQEhAx/vdl803OFSCgL4cOvcwn6cp5UFCW5T2vRuhN7/JSJg",
+        "claimed_sats": 1250000000
+      },
+      {
+        "address": "bcrt1qpeaxq9tpgqj2vr442m2hyth8grv97lvnmw7t78",
+        "script_type": "p2wpkh",
+        "format": "bip322-simple (smp)",
+        "signature": "smpAkgwRQIhAI2d87wln/Ns3moe4lyU7wF3dAMIPDOEguzmbKgUY+h8AiAzEZcKth58tK3FxbMZfVGZyEMkoZvvNnd7UxV7eJ+tRQEhA4AVVudzRw6dtlki4F3ItYhngJpNFmspNjqhXHuaUVVI",
+        "claimed_sats": 725000000
+      },
+      {
+        "address": "bcrt1panq85q2zz2v89swycqkyts2ypwhw4hm0ywltlymkmdhhpd7k776qrl3f34",
+        "script_type": "p2tr",
+        "format": "bip322-simple (smp)",
+        "signature": "smpAUFve5sdWvoxf1V2gu2YrkuXI6sJI5khxMQzppmIftkHUAFgvWO9gknO5Bs1PsMsdas9riz4prp2RvjtHiw2pX5tAQ==",
+        "claimed_sats": 300000000
+      }
+    ],
+    "total_claimed_sats": 2275000000
+  },
+  "liabilities": {
+    "root": {
+      "hash": "d5261c18672bd568780e862e14d6c930af5edc1315af557ab649cb690362a98f",
+      "sum": 200000000,
+      "leaf_count": 5
+    },
+    "disclosed_leaves": [
+      {
+        "leaf": {
+          "id": "CVT-2030",
+          "kind": "convertible_note",
+          "label": "0% convertible senior notes due 2030 (principal)",
+          "notional_usd_cents": 80000000,
+          "salt": "919c103427659c145d5de27ea5cca5c2dd3888dcf516a6ade2fdf6cf18fec43d"
+        },
+        "proof": {
+          "leaf_index": 0,
+          "path": [
+            {
+              "side": "right",
+              "hash": "5f1b8f6dc2fa62f02a43a2d8f0b613732bb4c8220429f7acabfe0e2977ade1a8",
+              "sum": 45000000
+            },
+            {
+              "side": "right",
+              "hash": "1f170f658310eb6432c32a6defe10d37c132f3dd2791231bd5fc2830dedce432",
+              "sum": 55000000
+            },
+            {
+              "side": "right",
+              "hash": "64d0434e33316f3ede3d8066b5ea485fd2c951657737752a35774497a032f712",
+              "sum": 20000000
+            }
+          ]
+        }
+      },
+      {
+        "leaf": {
+          "id": "CVT-2032",
+          "kind": "convertible_note",
+          "label": "0.5% convertible senior notes due 2032 (principal)",
+          "notional_usd_cents": 45000000,
+          "salt": "d6f418fddd6958ea71c66a09857ed04a9d1c50be153ed029afcde3a064c5f13d"
+        },
+        "proof": {
+          "leaf_index": 1,
+          "path": [
+            {
+              "side": "left",
+              "hash": "82404a91ecedfaaaf453b30694c9c01807b4046c114909b3a356f057b4cee1d5",
+              "sum": 80000000
+            },
+            {
+              "side": "right",
+              "hash": "1f170f658310eb6432c32a6defe10d37c132f3dd2791231bd5fc2830dedce432",
+              "sum": 55000000
+            },
+            {
+              "side": "right",
+              "hash": "64d0434e33316f3ede3d8066b5ea485fd2c951657737752a35774497a032f712",
+              "sum": 20000000
+            }
+          ]
+        }
+      },
+      {
+        "leaf": {
+          "id": "PREF-A",
+          "kind": "preferred_stock",
+          "label": "Series A perpetual preferred (liquidation preference)",
+          "notional_usd_cents": 40000000,
+          "salt": "036bdb0e84b8fc4ce1723a81a23abaaa7f3a92e1990e97026409c321e53f0be3"
+        },
+        "proof": {
+          "leaf_index": 2,
+          "path": [
+            {
+              "side": "right",
+              "hash": "ba01bf4ac38d5ec2dade6644964a39cdbfdafdde5e734175d3c65ebe8685bdc9",
+              "sum": 15000000
+            },
+            {
+              "side": "left",
+              "hash": "c16af7be4253a3224441aa1a14d3f6639ad34971f6a97362098a1382d6b0659e",
+              "sum": 125000000
+            },
+            {
+              "side": "right",
+              "hash": "64d0434e33316f3ede3d8066b5ea485fd2c951657737752a35774497a032f712",
+              "sum": 20000000
+            }
+          ]
+        }
+      },
+      {
+        "leaf": {
+          "id": "PREF-B",
+          "kind": "preferred_stock",
+          "label": "Series B perpetual preferred (liquidation preference)",
+          "notional_usd_cents": 15000000,
+          "salt": "fb5afdf778b8e750b5706eb7f87a6a230f7cfd6161f8a9730d0620fcd863b6a6"
+        },
+        "proof": {
+          "leaf_index": 3,
+          "path": [
+            {
+              "side": "left",
+              "hash": "d563f58d5f5d26657c8f6354af91ec7eb3258d4c9251fe805da2ae432c51f8d6",
+              "sum": 40000000
+            },
+            {
+              "side": "left",
+              "hash": "c16af7be4253a3224441aa1a14d3f6639ad34971f6a97362098a1382d6b0659e",
+              "sum": 125000000
+            },
+            {
+              "side": "right",
+              "hash": "64d0434e33316f3ede3d8066b5ea485fd2c951657737752a35774497a032f712",
+              "sum": 20000000
+            }
+          ]
+        }
+      },
+      {
+        "leaf": {
+          "id": "LOAN-1",
+          "kind": "term_loan",
+          "label": "Secured term loan (outstanding principal)",
+          "notional_usd_cents": 20000000,
+          "salt": "5f784868e591a02424979373ae2104914e763dd2fb9a0b46a343077e23f419fc"
+        },
+        "proof": {
+          "leaf_index": 4,
+          "path": [
+            {
+              "side": "right",
+              "hash": "6111a4a4a014f6bccf92789dff3feb28b83e76fff312c4ccda1694b51768ae7a",
+              "sum": 0
+            },
+            {
+              "side": "right",
+              "hash": "88bb8cdf4e41f4e9daaaf45892f49b07a9a1b4e4e7922ed612a6ab4e4ce5e24a",
+              "sum": 0
+            },
+            {
+              "side": "left",
+              "hash": "b5e74954a27ff3efe17b80d33179e7701da2e753fe71ad2a0b6df494adc349aa",
+              "sum": 180000000
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "price": {
+    "usd_cents_per_btc": 10000000,
+    "source": "fixed demo constant ($100,000.00/BTC); not a market quote",
+    "as_of": "demo"
+  },
+  "commitments": {
+    "challenge": "f483a1cf6440657006211fdecf0bdeacdf2ec15472868f46bc6751c65b4227c9",
+    "assets": "f46eaa23d908f71015b5b64a0314944c874633f9388be5340454752cdea2a3f3",
+    "liabilities": "ff6eb04bd655d223e722f5faca1d2a714f3f044c3fe9bdbc0930e4cba9672811",
+    "price": "afd290165fe9b359805e841271e5c5d4fddc465e6f3fbeb465b9e791503bad89"
+  },
+  "report": {
+    "assets_sats": 2275000000,
+    "assets_usd_cents": 227500000,
+    "liabilities_usd_cents": 200000000,
+    "coverage_bps": 11375,
+    "solvent": true
+  },
+  "bundle_digest": "e1407d74d3803db5802e56a2064339d98e5f612be850cf297dfa706775853239"
+}

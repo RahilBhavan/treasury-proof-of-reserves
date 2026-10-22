@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Proof-of-reserves bundle verifier (demo)</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main>
+  <header>
+    <h1>Proof-of-reserves bundle verifier</h1>
+    <p class="lede">Checks a <code>tpor-bundle/v1</code> file in this browser: BIP-322 signatures over the challenge, Merkle-sum inclusion proofs for the liabilities, commitments and the solvency arithmetic. Nothing is uploaded. Demo only: test keys on regtest.</p>
+  </header>
+
+  <section class="input" aria-label="Load a bundle">
+    <label class="file">Bundle file <input type="file" id="file" accept=".json,application/json"></label>
+    <button type="button" id="example">Load the example bundle</button>
+    <details>
+      <summary>Or paste JSON</summary>
+      <textarea id="paste" rows="8" spellcheck="false" aria-label="Bundle JSON"></textarea>
+      <button type="button" id="verify-paste">Verify pasted JSON</button>
+    </details>
+  </section>
+
+  <section id="result" hidden aria-live="polite">
+    <p id="verdict" class="verdict"></p>
+    <table class="summary">
+      <tbody id="summary"></tbody>
+    </table>
+    <h2>Checks</h2>
+    <ol id="checks" class="checks"></ol>
+  </section>
+
+  <aside class="limits">
+    <h2>What a pass does not mean</h2>
+    <ul>
+      <li>The browser cannot reach a node, so block hash, freshness and balances are <strong>skipped</strong>, not passed. Run <code>node src/cli.js verify &lt;bundle&gt;</code> against the node for those.</li>
+      <li>A signature proves someone could sign for the address at signing time. It does not prove the coins were not borrowed for the snapshot.</li>
+      <li>The liability tree proves each disclosed leaf is counted. It cannot show that no liability was left out; only creditors checking their own leaf, and the audited balance sheet, can.</li>
+      <li>The BTC/USD price is an input stated in the bundle, not a market quote.</li>
+    </ul>
+    <p>See <code>docs/threat-model.md</code>.</p>
+  </aside>
+</main>
+<script src="vendor/por.bundle.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

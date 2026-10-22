@@ -1,0 +1,26 @@
+{
+  "name": "treasury-proof-of-reserves",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Demo: how a bitcoin-treasury company could prove reserves (BIP-322 asset proofs + Merkle-sum liability tree) on regtest.",
+  "type": "module",
+  "scripts": {
+    "test": "node --test tests/",
+    "build:web": "esbuild src/browser-entry.js --bundle --format=iife --global-name=TPOR --platform=browser --inject:src/buffer-shim.js --outfile=web/vendor/por.bundle.js --minify --legal-comments=eof",
+    "regtest:start": "sh scripts/regtest.sh start",
+    "regtest:stop": "sh scripts/regtest.sh stop",
+    "demo": "node src/cli.js demo --out examples/bundle.json",
+    "verify": "node src/cli.js verify examples/bundle.json"
+  },
+  "dependencies": {
+    "@bitcoinerlab/secp256k1": "^1.2.0",
+    "@noble/hashes": "^2.4.0",
+    "bip322-js": "^4.0.0",
+    "bitcoinjs-lib": "7.0.1",
+    "buffer": "^6.0.3",
+    "ecpair": "^3.0.2"
+  },
+  "devDependencies": {
+    "esbuild": "^0.28.2"
+  }
+}

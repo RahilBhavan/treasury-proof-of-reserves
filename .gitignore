@@ -1,0 +1,4 @@
+node_modules/
+.regtest/
+*.log
+web/vendor/

@@ -1,0 +1,32 @@
+:root {
+  --ink: #1b1d21; --muted: #5b616b; --line: #d9dce1; --bg: #fbfbfa;
+  --pass: #17663a; --fail: #b3261e; --skip: #8a5a00;
+  font: 16px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; color: var(--ink); background: var(--bg);
+}
+main { max-width: 52rem; margin: 0 auto; padding: 2rem 1.25rem 4rem; }
+h1 { font-size: 1.6rem; margin: 0 0 .5rem; }
+h2 { font-size: 1.1rem; margin: 2rem 0 .5rem; }
+.lede { color: var(--muted); margin: 0; }
+code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .9em; }
+.input { display: flex; flex-wrap: wrap; gap: .75rem 1rem; align-items: center; margin: 1.5rem 0; padding: 1rem; border: 1px solid var(--line); border-radius: 6px; background: #fff; }
+.input details { flex-basis: 100%; }
+textarea { width: 100%; box-sizing: border-box; font: .85rem ui-monospace, monospace; margin: .5rem 0; }
+button { font: inherit; padding: .4rem .8rem; border: 1px solid var(--ink); border-radius: 4px; background: #fff; cursor: pointer; }
+button:focus-visible, input:focus-visible, summary:focus-visible { outline: 2px solid #2457c5; outline-offset: 2px; }
+.verdict { font-weight: 600; padding: .75rem 1rem; border-radius: 6px; border-left: 4px solid; background: #fff; }
+.verdict.fail { border-color: var(--fail); color: var(--fail); }
+.verdict.partial { border-color: var(--skip); }
+.summary { border-collapse: collapse; width: 100%; margin-top: 1rem; font-variant-numeric: tabular-nums; }
+.summary th { text-align: left; font-weight: 500; color: var(--muted); padding: .3rem 1rem .3rem 0; white-space: nowrap; vertical-align: top; }
+.summary td { padding: .3rem 0; word-break: break-all; }
+.summary tr + tr { border-top: 1px solid var(--line); }
+.checks { list-style: none; padding: 0; margin: 0; }
+.checks li { display: grid; grid-template-columns: 3.5rem 1fr; gap: 0 .75rem; padding: .35rem 0; border-top: 1px solid var(--line); }
+.checks .tag { font: 600 .75rem ui-monospace, monospace; text-transform: uppercase; padding-top: .2rem; }
+.checks .pass .tag { color: var(--pass); }
+.checks .fail .tag { color: var(--fail); }
+.checks .skip .tag { color: var(--skip); }
+.checks .name { word-break: break-all; }
+.checks .detail { grid-column: 2; color: var(--muted); font-size: .9rem; word-break: break-word; }
+.limits { margin-top: 2.5rem; padding-top: .5rem; border-top: 1px solid var(--line); color: var(--muted); }
+.limits h2 { color: var(--ink); }
