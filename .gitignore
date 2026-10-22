@@ -2,3 +2,4 @@ node_modules/
 .regtest/
 *.log
 web/vendor/
+_site/

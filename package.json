@@ -12,6 +12,7 @@
     "demo": "node src/cli.js demo --out .regtest/bundle.json",
     "demo:example": "node src/cli.js demo --out examples/bundle.json",
     "demo:adversarial": "node scripts/adversarial-demo.mjs",
+    "build:pages": "sh scripts/build-pages.sh",
     "verify": "node src/cli.js verify .regtest/bundle.json",
     "check": "find src tests scripts web -type f \\( -name \"*.js\" -o -name \"*.mjs\" \\) -not -path \"web/vendor/*\" -exec node --check {} \\;"
   },
