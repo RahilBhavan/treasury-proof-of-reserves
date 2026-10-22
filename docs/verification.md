@@ -31,8 +31,8 @@ review and executable verification. No independent-review claim is made.
 
 - `npm ci`, `npm run check`, `npm test`, `npm run build:web`,
   `node scripts/check-browser.mjs` and offline CLI verification work without
-  Core. 42 tests: 41 pass, one optional integration test skips.
-- With Bitcoin Core 31.1 running, 42/42 tests pass, none skipped. The integration
+  Core. 46 tests: 45 pass, one optional integration test skips.
+- With Bitcoin Core 31.1 running, 46/46 tests pass, none skipped. The integration
   test sends coins after H, spends coins held at H after H, compares H and tip
   balances, rejects inflated historical claims, and rejects stale snapshots.
 - Two consecutive `demo` runs followed by CLI verification each produced

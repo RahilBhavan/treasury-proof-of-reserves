@@ -10,7 +10,7 @@ This repository builds and verifies a proof-of-reserves bundle for a fictional b
 
 - **Asset proofs.** Signs a challenge (`entity`, `network`, `height`, `block_hash`, `liabilities_root`, `nonce`) with BIP-322 *simple* signatures for P2WPKH and P2TR test addresses. Signatures carry the `smp` prefix from the completed BIP.
 - **Balances at a height.** Recomputes each address's unspent balance at height H by scanning blocks 0 to H on a regtest node, so the answer does not depend on the current tip.
-- **Liability tree.** Builds a Merkle-sum tree over salted instrument leaves (`convertible_note`, `preferred_stock`, `term_loan`, `other_debt`). Each node commits to both child sums separately, which fixes the known flaw in the original construction.
+- **Liability tree.** Builds a Merkle-sum tree over salted instrument leaves (`convertible_note`, `preferred_stock`, `term_loan`, `other_debt`). Each node commits to both child sums separately. In Maxwell's original summing tree a node committed only to the parent sum, so a prover could report less than the true total ([Hu, Zhang and Guo, 2018](docs/research.md)).
 - **Report.** Core report inputs are hash-committed, and the report states whether assets at a stated BTC/USD price are at least the liability total.
 - **Verifiers.** A CLI runs all checks against a node. A static page (`web/index.html`) runs the signature, tree, commitment and arithmetic checks in the browser and marks the on-chain checks as skipped.
 
@@ -36,16 +36,20 @@ npm run check
 npm test
 ```
 
-Observed: 42 tests: 41 pass and one skips without Core; 42 pass with Core 31.1. The one regtest integration test runs only when a node from `npm run regtest:start` is reachable; otherwise it is reported as skipped.
+`npm ci` may warn that esbuild's install script is not approved. You can ignore it: the build still works.
+
+Observed: 46 tests: 45 pass and one skips without Core; 46 pass with Core 31.1. The one regtest integration test runs only when a node from `npm run regtest:start` is reachable; otherwise it is reported as skipped.
 
 End-to-end on regtest:
 
 ```sh
 BITCOIN_BIN_DIR=/path/to/bitcoin-31.1/bin npm run regtest:start   # RPC on 127.0.0.1:18743, data in .regtest/
-npm run demo                                                       # writes examples/bundle.json
-npm run verify                                                     # all checks against the node
+npm run demo                                                       # writes .regtest/bundle.json (git-ignored)
+npm run verify                                                     # all checks on that bundle against the node
 BITCOIN_BIN_DIR=/path/to/bitcoin-31.1/bin npm run regtest:stop
 ```
+
+`npm run demo:example` overwrites the committed `examples/bundle.json` instead. Use it only to refresh the example on purpose.
 
 Offline check (no node; on-chain checks are skipped): `node src/cli.js verify examples/bundle.json --offline`.
 
@@ -76,14 +80,12 @@ The page also works from `file://` with the file picker; only the "Load the exam
 
 ## Documentation
 
-- [Public design system](DESIGN.md): Rahil Design 3.3.0, shared tokens and visual review rules.
-
 - [docs/spec.md](docs/spec.md) - bundle contract, signed fields and supported signature subset.
 - [docs/verification.md](docs/verification.md) - reproduced defects, fixes, exact checks and Core provenance.
 - [docs/publication.md](docs/publication.md) - publication receipt and remote verification.
-
 - [docs/threat-model.md](docs/threat-model.md) - what a passing bundle proves, what it cannot (borrowed coins, omitted liabilities, price, seniority), and design notes for a zero-knowledge version.
 - [docs/research.md](docs/research.md) - cited sources on Merkle-sum trees, BIP-322, PoR weaknesses and what is public about Strategy's custody.
+- [DESIGN.md](DESIGN.md) - the browser verifier's visual design system (Rahil Design 3.3.0).
 
 ## Sources
 

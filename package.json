@@ -9,9 +9,10 @@
     "build:web": "esbuild src/browser-entry.js --bundle --format=iife --global-name=TPOR --platform=browser --inject:src/buffer-shim.js --outfile=web/vendor/por.bundle.js --minify --legal-comments=eof",
     "regtest:start": "sh scripts/regtest.sh start",
     "regtest:stop": "sh scripts/regtest.sh stop",
-    "demo": "node src/cli.js demo --out examples/bundle.json",
+    "demo": "node src/cli.js demo --out .regtest/bundle.json",
+    "demo:example": "node src/cli.js demo --out examples/bundle.json",
     "demo:adversarial": "node scripts/adversarial-demo.mjs",
-    "verify": "node src/cli.js verify examples/bundle.json",
+    "verify": "node src/cli.js verify .regtest/bundle.json",
     "check": "find src tests scripts web -type f \\( -name \"*.js\" -o -name \"*.mjs\" \\) -not -path \"web/vendor/*\" -exec node --check {} \\;"
   },
   "dependencies": {
