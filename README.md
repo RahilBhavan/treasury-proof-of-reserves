@@ -1,5 +1,7 @@
 # Treasury proof of reserves: a regtest demo of how a bitcoin-treasury company could prove assets cover its liabilities
 
+[![CI](https://github.com/RahilBhavan/treasury-proof-of-reserves/actions/workflows/ci.yml/badge.svg)](https://github.com/RahilBhavan/treasury-proof-of-reserves/actions/workflows/ci.yml)
+
 ![The static verifier checking examples/bundle.json in a browser: the 3 on-chain checks are marked skipped, and coverage is 113.75% at the bundle's stated price.](docs/img/verifier-example.png)
 
 This repository builds and verifies a proof-of-reserves bundle for a fictional bitcoin-treasury company on a local Bitcoin Core regtest node. The asset side is BIP-322 signatures over a challenge that contains a block hash, checked against balances recomputed from the chain at that height. The liability side is a Merkle-sum tree over debt and preferred-stock instruments, with an inclusion proof per instrument. The output is one JSON bundle that a CLI or a static web page verifies, plus a written threat model of what the proof does and does not show.
