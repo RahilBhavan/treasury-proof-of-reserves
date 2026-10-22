@@ -17,6 +17,7 @@ jobs:
       - run: npm ci
       - run: npm run check
       - run: npm test
+      - run: npm run demo:adversarial
       - run: npm run build:web
       - run: node scripts/check-browser.mjs
       - run: node src/cli.js verify examples/bundle.json --offline

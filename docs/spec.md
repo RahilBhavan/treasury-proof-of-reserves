@@ -26,6 +26,8 @@ It is a fictional regtest exercise, not a company reserve attestation.
 - The regtest chain adapter scans blocks 0..H, removing spent outpoints.
   A proof is a historical snapshot: coins spent after H still count at H.
   It trusts the selected Core node and assumes a stable chain while scanning.
+  A chain tip must be a non-negative safe integer; malformed tips fail the
+  chain query rather than establishing freshness.
 - With no chain, exactly three checks are skipped for a structurally valid
   bundle: block hash, freshness, and balances. `ok` means no failed checks;
   `complete` additionally requires no skips. Neither is a legal ownership,

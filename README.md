@@ -49,6 +49,12 @@ BITCOIN_BIN_DIR=/path/to/bitcoin-31.1/bin npm run regtest:stop
 
 Offline check (no node; on-chain checks are skipped): `node src/cli.js verify examples/bundle.json --offline`.
 
+Adversarial demonstration (no node): `npm run demo:adversarial`. Nine deterministic
+cases cover resealed balance inflation, missing witnesses, invalid signatures,
+stale evidence and malformed chain tips. Simulated-chain checks are explicitly
+labelled; offline variants preserve exactly three SKIPs. See the
+[five-minute example and limits](docs/adversarial-demo.md).
+
 Browser verifier:
 
 ```sh

@@ -122,6 +122,7 @@ export async function verifyBundle(bundle, { chain = null, maxAgeBlocks = DEFAUL
       else c.fail('block hash at height', `chain has ${hash} at ${h}; bundle says ${bundle.snapshot.block_hash}`);
 
       const tip = await chain.getTipHeight();
+      if (!Number.isSafeInteger(tip) || tip < 0) throw new Error('chain tip height must be a non-negative safe integer');
       const age = tip - h;
       if (age < 0) c.fail('snapshot freshness', `height ${h} is above the chain tip ${tip}`);
       else if (age > maxAgeBlocks) c.fail('snapshot freshness', `snapshot is ${age} blocks old; policy allows ${maxAgeBlocks}`);
