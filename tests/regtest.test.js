@@ -29,11 +29,18 @@ test('regtest: balances at a past height, borrowed coins after the snapshot, and
   if ((await rpc('getbalance', [], 'funder')) < 25) await rpc('generatetoaddress', [101, mineTo]);
 
   const keys = [generateKey('p2wpkh'), generateKey('p2tr')];
-  await rpc('sendtoaddress', [keys[0].address, 10.0], 'funder');
+  const fundingTxid = await rpc('sendtoaddress', [keys[0].address, 10.0], 'funder');
   await rpc('sendtoaddress', [keys[1].address, 5.0], 'funder');
   await rpc('generatetoaddress', [1, mineTo]);
   const height = await rpc('getblockcount');
   const block_hash = await rpc('getblockhash', [height]);
+  // Spend coins held at H after H: historical reserves still count them.
+  const block = await rpc('getblock', [block_hash, 2]);
+  const output = block.tx.find((tx) => tx.txid === fundingTxid).vout.find((v) => v.scriptPubKey.address === keys[0].address);
+  const raw = await rpc('createrawtransaction', [[{ txid: fundingTxid, vout: output.n }], { [mineTo]: 9.9999 }]);
+  const signed = await rpc('signrawtransactionwithkey', [raw, [keys[0].wif]]);
+  assert.equal(signed.complete, true);
+  await rpc('sendrawtransaction', [signed.hex]);
   const chain = regtestChain(rpc);
 
   // Coins that arrive one block after the snapshot ("borrowed" for the report).
@@ -43,6 +50,9 @@ test('regtest: balances at a past height, borrowed coins after the snapshot, and
   const atH = await chain.balancesAtHeight(keys.map((k) => k.address), height);
   assert.equal(atH.get(keys[0].address), 1000000000);
   assert.equal(atH.get(keys[1].address), 500000000);
+  const atTip = await chain.balancesAtHeight(keys.map((k) => k.address), height + 1);
+  assert.equal(atTip.get(keys[0].address) ?? 0, 0);
+  assert.equal(atTip.get(keys[1].address), 900000000);
 
   const honest = buildBundle({ entity: 'Regtest Co', network: 'regtest', height, block_hash, keys, balances: atH, liabilities: liabilities(), disclose: 'all', price: PRICE });
   const ok = await verifyBundle(honest, { chain });

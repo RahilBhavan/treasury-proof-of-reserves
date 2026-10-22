@@ -10,7 +10,8 @@
     "regtest:start": "sh scripts/regtest.sh start",
     "regtest:stop": "sh scripts/regtest.sh stop",
     "demo": "node src/cli.js demo --out examples/bundle.json",
-    "verify": "node src/cli.js verify examples/bundle.json"
+    "verify": "node src/cli.js verify examples/bundle.json",
+    "check": "find src tests scripts web -type f \\( -name \"*.js\" -o -name \"*.mjs\" \\) -not -path \"web/vendor/*\" -exec node --check {} \\;"
   },
   "dependencies": {
     "@bitcoinerlab/secp256k1": "^1.2.0",
@@ -22,5 +23,8 @@
   },
   "devDependencies": {
     "esbuild": "^0.28.2"
+  },
+  "engines": {
+    "node": ">=26.8.1"
   }
 }

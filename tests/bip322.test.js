@@ -41,3 +41,14 @@ test('full and proof-of-funds variants are refused rather than misread', () => {
   assert.equal(verifySimple(k.address, 'm', 'pof' + body), false);
   assert.equal(verifySimple(k.address, 'm', body), true); // unprefixed = pre-final simple encoding
 });
+
+test('simple verification rejects altered sighash flags, trailing bytes and malformed base64', () => {
+  const k = generateKey('p2wpkh');
+  const sig = signSimple(k.wif, k.address, 'm');
+  const bytes = Buffer.from(sig.slice(3), 'base64');
+  const altered = Buffer.from(bytes);
+  altered[1 + altered[1]] = 2; // sighash byte of first witness element
+  for (const bad of ['smp' + altered.toString('base64'), 'smp' + Buffer.concat([bytes, Buffer.from([0])]).toString('base64'), sig + '!']) {
+    assert.equal(verifySimple(k.address, 'm', bad), false);
+  }
+});

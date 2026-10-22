@@ -1,0 +1,7 @@
+# Documentation
+
+- [spec.md](spec.md): v1 verification contract and signed-field boundaries.
+- [threat-model.md](threat-model.md): what a reserve snapshot cannot prove.
+- [research.md](research.md): frozen October 21, 2026 source notes.
+- [verification.md](verification.md): reproduced issues and executable evidence.
+- [publication.md](publication.md): public repository receipt and checks.

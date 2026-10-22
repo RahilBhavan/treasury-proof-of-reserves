@@ -17,14 +17,14 @@ With `node src/cli.js verify` against a node (all checks `PASS`, none `SKIP`):
 3. **Balances at H.** The sum of the listed addresses' unspent outputs at height H equals the claimed figure. This is computed from the chain, not taken from the bundle.
 4. **No double counting by address.** No output script appears twice, including the same bech32 address in another letter case.
 5. **Freshness.** H is on the verifier's chain (no reorg) and at most `maxAgeBlocks` below the tip (default 144, about one day).
-6. **Liability inclusion.** Each disclosed leaf (instrument, notional, salt) is in the tree whose root total is the published liability figure. Because each node commits to both child sums, the prover cannot lower the total by shifting value between siblings, and negative sums are rejected.
-7. **Integrity of the report.** Every section is hash-committed, and the report's arithmetic (assets x stated price vs. liabilities) recomputes.
+6. **Liability inclusion.** At least one inclusion witness is required to bind the root sum to the signed hash. Each disclosed leaf (instrument, notional, salt) is in the tree whose root total is the published liability figure. Because each node commits to both child sums, the prover cannot lower the total by shifting value between siblings, and negative sums are rejected.
+7. **Integrity of the report.** Report inputs are hash-committed, and the report's arithmetic (assets x stated price vs. liabilities) recomputes. These are publicly recomputable checksums, not issuer authentication. The asset signatures bind the liability root hash and snapshot, but do not sign balances or price. See [spec.md](spec.md). Leaf count and proof index are descriptive metadata.
 
 ## What it does not prove
 
 | Gap | Why | What would narrow it |
 |---|---|---|
-| **Borrowed coins** | Coins can be lent to the prover for block H and returned at H+1. The regtest test shows the inverse case: coins that arrive after H are not counted. Coins held at H and gone at H+1 still count. | Require the coins to stay unspent across a window (H-k to H+k), or use repeated, unannounced snapshots. |
+| **Borrowed coins** | Coins can be lent to the prover for block H and returned at H+1. The regtest test shows both cases: coins arriving after H are not counted, while coins spent after H still count at H. | Require the coins to stay unspent across a window (H-k to H+k), or use repeated, unannounced snapshots. |
 | **Ownership vs. control** | A signature shows key control, not beneficial ownership. A custodian, lender or affiliate can sign for coins that are pledged elsewhere. | Custodian attestations with legal liability; disclosure of encumbrances (liens, rehypothecation). |
 | **Omitted liabilities** | The tree covers only the leaves the prover put in. A creditor who never checks their leaf cannot detect omission. | Each creditor or trustee checks their leaf; reconcile the root total to the audited balance sheet. |
 | **Off-tree liabilities** | Derivatives, guarantees, leases, tax and contingent claims are not instruments in the tree. | Auditor sign-off that the tree total matches reported liabilities. |

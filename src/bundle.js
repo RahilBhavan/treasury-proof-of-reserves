@@ -3,6 +3,7 @@
 // A chain source is optional. Without one, the verifier checks signatures,
 // liability proofs, commitments and arithmetic, and marks the on-chain checks
 // as skipped rather than passed.
+import { validateBundle } from './validateBundle.js';
 import { verifySimple } from './bip322.js';
 import * as ecc from '@bitcoinerlab/secp256k1';
 import { address as btcAddress, initEccLib, networks } from 'bitcoinjs-lib';
@@ -63,10 +64,12 @@ class Checks {
 export async function verifyBundle(bundle, { chain = null, maxAgeBlocks = DEFAULT_MAX_AGE_BLOCKS } = {}) {
   const c = new Checks();
 
-  if (bundle.format !== BUNDLE_FORMAT) {
-    c.fail('format', `expected ${BUNDLE_FORMAT}, got ${bundle.format}`);
+  if (bundle?.format !== BUNDLE_FORMAT) {
+    c.fail('format', `expected ${BUNDLE_FORMAT}, got ${bundle?.format}`);
     return summarize(c);
   }
+
+  if (!c.run('bundle input', () => validateBundle(bundle, maxAgeBlocks))) return summarize(c);
 
   // 1. Challenge binds network, height, block hash and liabilities root.
   let ch = null;
@@ -146,6 +149,9 @@ export async function verifyBundle(bundle, { chain = null, maxAgeBlocks = DEFAUL
   // 6. Liabilities: every disclosed leaf is included in the root, root sum is sane.
   const root = bundle.liabilities.root;
   c.run('liabilities root', () => {
+    // A root hash alone does not authenticate the separately supplied sum.
+    // At least one inclusion witness must recompute both from a signed root.
+    if (bundle.liabilities.disclosed_leaves.length === 0) throw new Error('at least one liability inclusion witness is required to bind the root sum');
     if (!/^[0-9a-f]{64}$/.test(root.hash)) throw new Error('root hash malformed');
     if (!Number.isSafeInteger(root.sum) || root.sum < 0) throw new Error('root sum malformed');
     return `${root.leaf_count} leaves, total ${root.sum} cents`;
