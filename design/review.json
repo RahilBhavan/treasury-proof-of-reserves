@@ -1,0 +1,28 @@
+{
+  "design_authority": "rahil-design",
+  "version": "3.3.0",
+  "tokens_sha256": "d68805efd223fc8c3deb715e9ef240ae633a740c69993959ccf3dd13c140c05b",
+  "scope": "Public project artifacts; existing CLI/protocol/calculation behavior retained.",
+  "surfaces": [
+    "web/index.html",
+    "web/style.css"
+  ],
+  "changes": [
+    "Required skill routing in AGENTS.md",
+    "Portable DESIGN.md contract",
+    "Unchanged canonical token snapshot",
+    "README design link",
+    "Dark public shell, light result surface, semantic statuses and yellow actions/focus",
+    "Licensed self-hosted font subsets with provenance",
+    "Current browser screenshot in README"
+  ],
+  "review": "Changed verifier inspected in the T3 collaborative browser at 1280px desktop and 400px narrow layout. Example: zero failed checks, three explicit on-chain skips. Invalid JSON produces an error and reloading the example recovers. No horizontal overflow at 400px; long hashes wrap; keyboard focus is visible; reduced-motion rule present.",
+  "font_limit": "Anton and IBM Plex Sans Latin subsets self-hosted; all three WOFF2 faces confirmed loaded.",
+  "behavior_checks": {
+    "unit_tests_passed": 41,
+    "regtest_test_skipped": 1,
+    "browser_failed_checks": 0,
+    "browser_chain_checks_skipped": 3,
+    "browser_bundle_build": "passed"
+  }
+}

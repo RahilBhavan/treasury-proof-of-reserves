@@ -7,13 +7,22 @@
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<main>
-  <header>
-    <h1>Proof-of-reserves bundle verifier</h1>
-    <p class="lede">Checks a <code>tpor-bundle/v1</code> file in this browser: BIP-322 signatures over the challenge, Merkle-sum inclusion proofs for the liabilities, commitments and the solvency arithmetic. Nothing is uploaded. Demo only: test keys on regtest.</p>
+<a class="skip-link" href="#main">Skip to verifier</a>
+<main id="main">
+  <nav class="brand" aria-label="Project">
+    <span>RAHIL BHAVAN / BUILD NOTES</span>
+    <a href="https://github.com/RahilBhavan/treasury-proof-of-reserves">Source and method</a>
+  </nav>
+  <header class="hero">
+    <p class="eyebrow">A student trynna learn · Bitcoin engineering</p>
+    <h1>Proof of reserves.</h1>
+    <p class="lede">Inspect a bundle's signatures, liability proofs and coverage arithmetic. See what the evidence supports—and which checks still need a node.</p>
+    <p class="basis">Local regtest demo. Files stay in your browser.</p>
   </header>
 
   <section class="input" aria-label="Load a bundle">
+    <h2>Inspect a bundle</h2>
+    <p class="help">Start with the fictional example, or choose your own bundle JSON.</p>
     <label class="file">Bundle file <input type="file" id="file" accept=".json,application/json"></label>
     <button type="button" id="example">Load the example bundle</button>
     <details>
@@ -42,6 +51,7 @@
     </ul>
     <p>See <code>docs/threat-model.md</code>.</p>
   </aside>
+  <footer>Independent learning project · Regtest only · No real company reserve claim</footer>
 </main>
 <script src="vendor/por.bundle.js"></script>
 <script src="app.js"></script>
