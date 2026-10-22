@@ -44,3 +44,7 @@ The final documentation receipt is a descendant of the implementation commit.
 - Remaining limitations: borrowed/encumbered assets, omissions, ownership,
   price and chain-scan assumptions in [verification.md](verification.md).
   No license file yet; no security certification or company wallet claims.
+
+## Update 2026-10-22: license
+
+The MIT license was added in `LICENSE`. It covers this project's code only. Earlier statements in this record that no license file existed describe the state at publication.

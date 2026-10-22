@@ -105,6 +105,6 @@ The page also works from `file://` with the file picker; only the "Load the exam
 
 ## License
 
-No license file yet.
+[MIT](LICENSE). The license covers this project's code only. Fonts in `web/fonts/` keep their own licenses (see `web/fonts/SOURCES.md`).
 
 Part of [Rahil Bhavan's projects](https://github.com/RahilBhavan).
