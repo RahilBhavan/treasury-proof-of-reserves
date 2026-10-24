@@ -1,8 +1,12 @@
 # Treasury proof of reserves: a regtest demo of how a bitcoin-treasury company could prove assets cover its liabilities
 
-[![CI](https://github.com/RahilBhavan/treasury-proof-of-reserves/actions/workflows/ci.yml/badge.svg)](https://github.com/RahilBhavan/treasury-proof-of-reserves/actions/workflows/ci.yml)
+A company that holds bitcoin can publish one file that lets anyone check that its coins cover the debts it lists. This repo builds and checks that file for a made-up company on a private test network.
 
-![Rahil Design browser verifier with the fictional example loaded; its verdict explicitly preserves three skipped on-chain checks.](docs/img/verifier-rahil-design.webp)
+[![CI](https://github.com/RahilBhavan/treasury-proof-of-reserves/actions/workflows/ci.yml/badge.svg)](https://github.com/RahilBhavan/treasury-proof-of-reserves/actions/workflows/ci.yml) [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+
+**Live:** https://rahilbhavan.github.io/treasury-proof-of-reserves/
+
+![The browser verifier loads the example bundle in one click. Signature, liability-tree and arithmetic checks pass, and the three on-chain checks show SKIP, not PASS, because a browser cannot reach a node.](docs/img/verifier-demo.gif)
 
 This repository builds and verifies a proof-of-reserves bundle for a fictional bitcoin-treasury company on a local Bitcoin Core regtest node. The asset side is BIP-322 signatures over a challenge that contains a block hash, checked against balances recomputed from the chain at that height. The liability side is a Merkle-sum tree over debt and preferred-stock instruments, with an inclusion proof per instrument. The output is one JSON bundle that a CLI or a static web page verifies, plus a written threat model of what the proof does and does not show.
 
@@ -12,9 +16,9 @@ This repository builds and verifies a proof-of-reserves bundle for a fictional b
 - **Balances at a height.** Recomputes each address's unspent balance at height H by scanning blocks 0 to H on a regtest node, so the answer does not depend on the current tip.
 - **Liability tree.** Builds a Merkle-sum tree over salted instrument leaves (`convertible_note`, `preferred_stock`, `term_loan`, `other_debt`). Each node commits to both child sums separately. In Maxwell's original summing tree a node committed only to the parent sum, so a prover could report less than the true total ([Hu, Zhang and Guo, 2018](docs/research.md)).
 - **Report.** Core report inputs are hash-committed, and the report states whether assets at a stated BTC/USD price are at least the liability total.
-- **Verifiers.** A CLI runs all checks against a node. A static page (`web/index.html`) runs the signature, tree, commitment and arithmetic checks in the browser and marks the on-chain checks as skipped.
+- **Verifiers.** A CLI runs all checks against a node. A static page (`web/index.html`, hosted on GitHub Pages) runs the signature, tree, commitment and arithmetic checks in the browser and marks the on-chain checks as skipped.
 
-Example run (`examples/bundle.json`, regtest height 113): 3 addresses holding 22.75 BTC; 5 fictional instruments totalling $2,000,000.00; at a fixed demo price of $100,000.00 per BTC, assets are $2,275,000.00 and coverage is 113.75%. The price is a demo constant, not a market quote.
+Example run (`examples/bundle.json`, regtest height 113): 3 addresses holding 22.75 BTC; 5 fictional instruments totalling $2,000,000.00; at a fixed demo price (not a market quote) of $100,000.00 per BTC, assets are $2,275,000.00 and coverage is 113.75%.
 
 ## How it works
 
@@ -28,7 +32,7 @@ Example run (`examples/bundle.json`, regtest height 113): 3 addresses holding 22
 
 ## Run it
 
-Prerequisites: Node.js (tested on 26.8.1; older versions not tried) and, for the chain checks, Bitcoin Core `bitcoind` (tested on 31.1, downloaded from bitcoincore.org, checksum matched, manifest signature checked; see [verification](docs/verification.md)).
+Prerequisites: Node.js 26.8.1 or later and, for the chain checks, Bitcoin Core `bitcoind` 31.1 (download provenance in [verification](docs/verification.md)).
 
 ```sh
 npm ci
@@ -36,9 +40,9 @@ npm run check
 npm test
 ```
 
-`npm ci` may warn that esbuild's install script is not approved. You can ignore it: the build still works.
+`npm ci` may warn that esbuild's install script is not approved. The build works without it.
 
-Observed: 46 tests: 45 pass and one skips without Core; 46 pass with Core 31.1. The one regtest integration test runs only when a node from `npm run regtest:start` is reachable; otherwise it is reported as skipped.
+Observed: 46 tests. Without Core, 45 pass and the regtest integration test skips. With a node from `npm run regtest:start` (Core 31.1), all 46 pass.
 
 End-to-end on regtest:
 
@@ -53,11 +57,7 @@ BITCOIN_BIN_DIR=/path/to/bitcoin-31.1/bin npm run regtest:stop
 
 Offline check (no node; on-chain checks are skipped): `node src/cli.js verify examples/bundle.json --offline`.
 
-Adversarial demonstration (no node): `npm run demo:adversarial`. Nine deterministic
-cases cover resealed balance inflation, missing witnesses, invalid signatures,
-stale evidence and malformed chain tips. Simulated-chain checks are explicitly
-labelled; offline variants preserve exactly three SKIPs. See the
-[five-minute example and limits](docs/adversarial-demo.md).
+Adversarial demonstration (no node): `npm run demo:adversarial`. Nine deterministic cases cover resealed balance inflation, missing witnesses, invalid signatures, stale evidence and malformed chain tips. Simulated-chain checks are labelled, and offline variants keep exactly three SKIPs. See the [five-minute example](docs/adversarial-demo.md).
 
 Browser verifier:
 
@@ -67,7 +67,15 @@ node scripts/check-browser.mjs          # exercises the artifact without Node gl
 python3 -m http.server 8000            # then open http://127.0.0.1:8000/web/
 ```
 
-The page also works from `file://` with the file picker; only the "Load the example bundle" button needs HTTP.
+The page also works from `file://` with the file picker. Only the "Load the example bundle" button needs HTTP.
+
+GitHub Pages site (the same files `.github/workflows/pages.yml` deploys on each push to `main`):
+
+```sh
+npm run build:pages                    # builds and checks the bundle, writes _site/ (git-ignored)
+```
+
+`_site/` keeps `web/` and `examples/` side by side, and its `index.html` redirects to `web/`, so the example button works under `/treasury-proof-of-reserves/`.
 
 ## Repository layout
 
@@ -75,8 +83,8 @@ The page also works from `file://` with the file picker; only the "Load the exam
 - `tests/` - Node test runner suites and the official BIP-322 test vectors (`tests/vectors/`).
 - `web/` - the static verifier page; `web/vendor/` is the build output and is not committed.
 - `examples/` - fictional liabilities input and a bundle produced by a real regtest run.
-- `scripts/` - start, stop and wipe the local regtest node.
-- `docs/` - research notes, threat model and the screenshot.
+- `scripts/` - regtest node control, the adversarial demo, the browser-artifact check and the Pages build.
+- `docs/` - research notes, threat model, verification records and the verifier GIF.
 
 ## Documentation
 
@@ -98,7 +106,7 @@ The page also works from `file://` with the file picker; only the "Load the exam
 
 - Independent work. Not affiliated with, reviewed by or endorsed by Strategy or Coinbase.
 - Demo only: test keys on a local regtest network. Private keys are written to `.regtest/keys.json`, which is git-ignored. Do not use this code with real funds.
-- The research notes freeze source context at October 21, 2026. The cited Strategy disclosures supply no wallet list. Its FY2025 10-K names custodians; third-party address attributions such as Arkham's are attributions, not proof. Nothing here proves anything about Strategy.
+- Nothing here proves anything about Strategy. Its cited disclosures (frozen at October 21, 2026) name custodians but list no wallets, and third-party attributions such as Arkham's are not proof.
 - The chain source is regtest only. A public signet or mainnet source (an indexer) is not implemented.
 - `bip322-js` 4.0.0 is used for P2WPKH (SIGHASH_ALL only) and single-key P2TR. P2WSH, *full* and *proof-of-funds* signatures are not supported. `bitcoinjs-lib` is pinned to 7.0.1 because signing fails with 7.0.4.
 - The proof does not detect borrowed coins, omitted liabilities, encumbered coins or a wrong price. See [docs/threat-model.md](docs/threat-model.md).
