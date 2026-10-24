@@ -57,7 +57,7 @@ BITCOIN_BIN_DIR=/path/to/bitcoin-31.1/bin npm run regtest:stop
 
 Offline check (no node; on-chain checks are skipped): `node src/cli.js verify examples/bundle.json --offline`.
 
-Adversarial demonstration (no node): `npm run demo:adversarial`. Nine deterministic cases cover resealed balance inflation, missing witnesses, invalid signatures, stale evidence and malformed chain tips. Simulated-chain checks are labelled, and offline variants keep exactly three SKIPs. See the [five-minute example](docs/adversarial-demo.md).
+Adversarial demonstration (no node): `npm run demo:adversarial`. Nine deterministic cases cover resealed balance inflation, missing witnesses, invalid signatures, stale evidence and malformed chain tips. Simulated-chain checks are labelled. See [docs/adversarial-demo.md](docs/adversarial-demo.md).
 
 Browser verifier:
 
@@ -88,6 +88,8 @@ npm run build:pages                    # builds and checks the bundle, writes _s
 
 ## Documentation
 
+- [docs/adversarial-demo.md](docs/adversarial-demo.md) - nine deterministic attack cases, expected verdicts and a five-minute reproduction.
+- [docs/README.md](docs/README.md) - index of all documents, including the improvement plan.
 - [docs/spec.md](docs/spec.md) - bundle contract, signed fields and supported signature subset.
 - [docs/verification.md](docs/verification.md) - reproduced defects, fixes, exact checks and Core provenance.
 - [docs/publication.md](docs/publication.md) - publication receipt and remote verification.
