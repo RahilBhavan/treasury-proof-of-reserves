@@ -42,40 +42,18 @@ npm test
 
 `npm ci` may warn that esbuild's install script is not approved. The build works without it.
 
-Observed: 46 tests. Without Core, 45 pass and the regtest integration test skips. With a node from `npm run regtest:start` (Core 31.1), all 46 pass.
+Observed: 46 tests. Without Core, 45 pass and the regtest integration test skips. With a Core 31.1 regtest node running, all 46 pass (run on 2026-10-24, Linux x86_64; see [verification](docs/verification.md)).
 
-End-to-end on regtest:
+End-to-end on regtest (needs Bitcoin Core 31.1; `BITCOIN_BIN_DIR` points at its `bin/`):
 
 ```sh
-BITCOIN_BIN_DIR=/path/to/bitcoin-31.1/bin npm run regtest:start   # RPC on 127.0.0.1:18743, data in .regtest/
-npm run demo                                                       # writes .regtest/bundle.json (git-ignored)
-npm run verify                                                     # all checks on that bundle against the node
+BITCOIN_BIN_DIR=/path/to/bitcoin-31.1/bin npm run regtest:start
+npm run demo
+npm run verify
 BITCOIN_BIN_DIR=/path/to/bitcoin-31.1/bin npm run regtest:stop
 ```
 
-`npm run demo:example` overwrites the committed `examples/bundle.json` instead. Use it only to refresh the example on purpose.
-
-Offline check (no node; on-chain checks are skipped): `node src/cli.js verify examples/bundle.json --offline`.
-
-Adversarial demonstration (no node): `npm run demo:adversarial`. Nine deterministic cases cover resealed balance inflation, missing witnesses, invalid signatures, stale evidence and malformed chain tips. Simulated-chain checks are labelled. See [docs/adversarial-demo.md](docs/adversarial-demo.md).
-
-Browser verifier:
-
-```sh
-npm run build:web                      # writes web/vendor/por.bundle.js
-node scripts/check-browser.mjs          # exercises the artifact without Node globals
-python3 -m http.server 8000            # then open http://127.0.0.1:8000/web/
-```
-
-The page also works from `file://` with the file picker. Only the "Load the example bundle" button needs HTTP.
-
-GitHub Pages site (the same files `.github/workflows/pages.yml` deploys on each push to `main`):
-
-```sh
-npm run build:pages                    # builds and checks the bundle, writes _site/ (git-ignored)
-```
-
-`_site/` keeps `web/` and `examples/` side by side, and its `index.html` redirects to `web/`, so the example button works under `/treasury-proof-of-reserves/`.
+Offline check, adversarial demo, browser verifier and the Pages build are in [docs/run.md](docs/run.md).
 
 ## Repository layout
 
@@ -89,6 +67,7 @@ npm run build:pages                    # builds and checks the bundle, writes _s
 ## Documentation
 
 - [docs/adversarial-demo.md](docs/adversarial-demo.md) - nine deterministic attack cases, expected verdicts and a five-minute reproduction.
+- [docs/run.md](docs/run.md) - offline check, adversarial demo, browser verifier and Pages build commands.
 - [docs/README.md](docs/README.md) - index of all documents, including the improvement plan.
 - [docs/spec.md](docs/spec.md) - bundle contract, signed fields and supported signature subset.
 - [docs/verification.md](docs/verification.md) - reproduced defects, fixes, exact checks and Core provenance.
