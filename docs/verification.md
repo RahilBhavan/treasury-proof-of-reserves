@@ -47,6 +47,11 @@ review and executable verification. No independent-review claim is made.
   `a9184da5687b9cb7a1863807f4a8f4d743ec07d4f683f707cb85ce72f5b33f47`.
   Source and CC0-1.0 attribution: [BIP-322 at frozen commit](https://github.com/bitcoin/bips/blob/130b8e0fa7f30fa45532f080b87b8db27a79e46e/bip-0322.mediawiki).
 
+- Re-run on 2026-10-24 with Core 31.1 (Linux x86_64 tarball, SHA-256 and
+  signatures checked as below) on a fresh regtest datadir: `npm run regtest:start`,
+  `npm run demo` (height 107, 22.75 BTC, solvent), `npm run verify` (0 failed,
+  0 skipped) and `npm test` (46 tests, 46 pass, 0 skipped).
+
 ## Core provenance
 
 Linux x86_64 archive fetched from
